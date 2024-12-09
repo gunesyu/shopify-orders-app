@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class ShopifyInstallDto {
   @IsString()
@@ -26,4 +26,22 @@ export class ShopifyInstallRedirectDto extends ShopifyInstallDto {
   @IsString()
   @IsNotEmpty()
   state: string;
+}
+
+export class CreateShopifyShopDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  url: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  token: string;
 }

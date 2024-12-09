@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "87c567ce866a7652abad360dce52edcd"
-application_url = "https://f380-176-40-225-174.ngrok-free.app/shopify/install"
+application_url = "https://dc08-176-40-225-174.ngrok-free.app/shopify/install"
 embedded = false
 name = "insider-case"
 handle = "insider-case"
@@ -20,7 +20,7 @@ direct_api_mode = "online"
 api_version = "2024-10"
 
 [auth]
-redirect_urls = [ "https://f380-176-40-225-174.ngrok-free.app/shopify/redirect" ]
+redirect_urls = [ "https://dc08-176-40-225-174.ngrok-free.app/shopify/redirect" ]
 
 [pos]
 embedded = false

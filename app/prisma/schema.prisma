@@ -13,11 +13,45 @@ datasource db {
   url      = env("PRISMA_DB_URL")
 }
 
-model User {
+model Shop {
   id        Int      @id @default(autoincrement())
   email     String   @unique
+  url       String   @unique
+  name      String
+  token     String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  Order     Order[]
 
-  @@map("user")
+  @@index([url])
+  @@index([email])
+  @@map("shop")
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Order     Order[]
+
+  @@index([email])
+  @@map("customer")
+}
+
+// this is a hypertable
+model Order {
+  id         Int      @default(autoincrement())
+  shopId     Int
+  customerId Int
+  total      Float
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  shop     Shop     @relation(fields: [shopId], references: [id])
+  customer Customer @relation(fields: [customerId], references: [id])
+
+  @@unique([id, createdAt], name: "idx_unique_ping_log_id_created_at")
+  @@map("order")
 }

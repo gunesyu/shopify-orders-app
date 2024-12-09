@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Req, Res, UsePipes } from '@nestjs/common';
 
 import { ShopifyService } from './shopify.service';
-import { ShopifyInstallDto } from './shopify.dto';
+import { ShopifyInstallDto, ShopifyInstallRedirectDto } from './shopify.dto';
 import { HmacPipe } from './validation/hmac.pipe';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
@@ -28,9 +28,15 @@ export class ShopifyController {
   }
 
   @Get('redirect')
-  async redirect(@Res() res: Response, @Req() req: Request) {
-    await this.shopifyService.handleInstallRedirect(req, res);
+  async redirect(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Query() query?: ShopifyInstallRedirectDto,
+  ) {
+    const { shop } = query;
 
-    return res.redirect('/');
+    await this.shopifyService.handleInstallRedirect(shop, req, res);
+
+    return res.redirect(`/?shop=${shop}`);
   }
 }

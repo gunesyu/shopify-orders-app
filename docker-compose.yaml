@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     networks:
       - app_network
-    command: http host.docker.internal:${APP_PORT}
+    command: http --host-header=rewrite host.docker.internal:${APP_PORT}
 
   db:
     container_name: shopify-app-db

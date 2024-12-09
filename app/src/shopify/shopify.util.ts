@@ -1,7 +1,7 @@
 import { ShopifyInstallRedirectDto } from './shopify.dto';
 import { ConfigService } from '@nestjs/config';
 import { ShopifyService } from './shopify.service';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ShopifyUtil {
@@ -12,9 +12,14 @@ export class ShopifyUtil {
 
   // https://shopify.dev/docs/apps/build/authentication-authorization/access-tokens/authorization-code-grant#step-1-verify-the-installation-request
   async verifyHmac(query: any): Promise<boolean> {
-    const shopify = await this.shopifyService.getShopifyInstance();
+    const shopify = this.shopifyService.getShopifyInstance();
 
-    return await shopify.utils.validateHmac(query);
+    try {
+      return await shopify.utils.validateHmac(query);
+    } catch (error) {
+      console.error(error);
+      throw new BadRequestException('Invalid HMAC signature');
+    }
   }
 
   // https://shopify.dev/docs/apps/build/authentication-authorization/access-tokens/authorization-code-grant#step-3-validate-authorization-code

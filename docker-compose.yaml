@@ -1,4 +1,16 @@
 services:
+  ngrok:
+    container_name: shopify-app-ngrok
+    image: ngrok/ngrok
+    ports:
+      - '4040:4040'
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    restart: unless-stopped
+    networks:
+      - app_network
+    command: http host.docker.internal:${APP_PORT}
+
   db:
     container_name: shopify-app-db
     image: timescale/timescaledb-ha:pg16
@@ -33,9 +45,14 @@ services:
       - '9229:9229'
     environment:
       PRISMA_DB_URL: "${PRISMA_DB_PROVIDER}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=public"
+      APP_PORT: ${APP_PORT}
+    env_file:
+      - ./.env
     depends_on:
       db:
         condition: service_healthy
+      ngrok:
+        condition: service_started
     volumes:
       - ./app:/app
       - ./app/node_modules:/app/node_modules

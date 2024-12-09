@@ -1,15 +1,25 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from '../common/prisma/prisma.module';
-import { ShopifyService } from './shopify.service';
 import { ShopifyRepository } from './shopify.repository';
-import { ShopifyController } from './shopify.controller';
-import { ConfigService } from '@nestjs/config';
+import { ShopifyInstallController } from './shopify.install.controller';
 import { ShopifyUtil } from './shopify.util';
+import { ShopifyOrderService } from './shopify.order.service';
+import { ShopifyOrderController } from './shopify.order.controller';
+import { CommonModule } from '../common/common.module';
+import { ShopifyService } from './shopify.service';
+import { ShopifyInstallService } from './shopify.install.service';
+import { ShopifyOrderRepository } from './shopify.order.repository';
 
 @Module({
-  imports: [PrismaModule],
-  providers: [ShopifyService, ShopifyRepository, ShopifyUtil, ConfigService],
-  controllers: [ShopifyController],
-  exports: [ShopifyService],
+  imports: [CommonModule],
+  providers: [
+    ShopifyService,
+    ShopifyRepository,
+    ShopifyUtil,
+    ShopifyInstallService,
+    ShopifyOrderService,
+    ShopifyOrderRepository,
+  ],
+  controllers: [ShopifyInstallController, ShopifyOrderController],
+  exports: [ShopifyService, ShopifyInstallService, ShopifyOrderService],
 })
 export class ShopifyModule {}

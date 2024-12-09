@@ -1,18 +1,19 @@
 import { Controller, Get, Query, Req, Res, UsePipes } from '@nestjs/common';
 
-import { ShopifyService } from './shopify.service';
-import { ShopifyInstallDto, ShopifyInstallRedirectDto } from './shopify.dto';
+import { ShopifyInstallService } from './shopify.install.service';
+import {
+  ShopifyInstallDto,
+  ShopifyInstallRedirectDto,
+} from './shopify.install.dto';
 import { HmacPipe } from './validation/hmac.pipe';
-import { ConfigService } from '@nestjs/config';
-import { Reflector } from '@nestjs/core';
 import { Request, Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('shopify')
-export class ShopifyController {
+export class ShopifyInstallController {
   constructor(
-    private shopifyService: ShopifyService,
+    private shopifyService: ShopifyInstallService,
     private readonly configService: ConfigService,
-    private readonly reflector: Reflector,
   ) {}
 
   @Get('install')
@@ -37,6 +38,8 @@ export class ShopifyController {
 
     await this.shopifyService.handleInstallRedirect(shop, req, res);
 
-    return res.redirect(`/?shop=${shop}`);
+    const redirectUrl = `${this.configService.get('UI_BASE_URL')}/?s=${btoa(shop)}`;
+
+    return res.redirect(redirectUrl);
   }
 }

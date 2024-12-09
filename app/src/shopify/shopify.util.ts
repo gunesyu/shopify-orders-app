@@ -1,7 +1,7 @@
-import { ShopifyInstallRedirectDto } from './shopify.dto';
+import { ShopifyInstallRedirectDto } from './shopify.install.dto';
 import { ConfigService } from '@nestjs/config';
-import { ShopifyService } from './shopify.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ShopifyService } from './shopify.service';
 
 @Injectable()
 export class ShopifyUtil {

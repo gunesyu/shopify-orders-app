@@ -29,12 +29,13 @@ model Shop {
 }
 
 model Customer {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  Order     Order[]
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  name       String
+  customerId String   @unique @map("customer_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  Order      Order[]
 
   @@index([email])
   @@map("customer")
@@ -43,9 +44,11 @@ model Customer {
 // this is a hypertable
 model Order {
   id         Int      @default(autoincrement())
-  shopId     Int
-  customerId Int
+  orderId    String   @unique @map("order_id")
+  shopId     Int      @map("shop_id")
+  customerId Int      @map("customer_id")
   total      Float
+  currency   String
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt  DateTime @updatedAt @map("updated_at")
 

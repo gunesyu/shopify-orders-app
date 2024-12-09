@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@Config/*": ["./config/*"],
+      "@Features/*": ["./features/*"],
+      "@Pages/*": ["./pages/*"],
+      "@Types/*": ["./types/*"],
+      "@Utils/*": ["./utils/*"],
+      "@Slices/*": ["./config/store/slices/*"],
+      "@Components/*": ["./shared/components/*"],
+      "@Hooks/*": ["./shared/hooks/*"],
+      "@Shared/*": ["./shared/*"],
+      "@Assets/*": ["./assets/*"]
+    }
+  }
+}

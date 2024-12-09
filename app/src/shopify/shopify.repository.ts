@@ -1,12 +1,12 @@
 import { PrismaService } from '../common/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { CreateShopifyShopDto } from './shopify.dto';
+import { CreateShopifyShopDto } from './shopify.install.dto';
 
 @Injectable()
 export class ShopifyRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getOneByUrl(url: string) {
+  async getOneShopByUrl(url: string) {
     return this.prisma.shop.findFirst({
       where: {
         url,

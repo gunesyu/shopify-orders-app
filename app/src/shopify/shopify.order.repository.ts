@@ -23,6 +23,9 @@ export class ShopifyOrderRepository {
           gte: new Date(since),
         },
       },
+      include: {
+        customer: true,
+      },
     });
   }
 
@@ -76,6 +79,9 @@ export class ShopifyOrderRepository {
             orderId: {
               in: ordersDto.map(({ orderId }) => orderId),
             },
+          },
+          include: {
+            customer: true,
           },
         });
       });

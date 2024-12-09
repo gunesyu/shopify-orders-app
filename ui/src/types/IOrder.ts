@@ -20,11 +20,19 @@ export interface IShopifyOrders {
   };
 }
 
+export interface ICustomer {
+  id: number;
+  customerId: string;
+  name: string;
+  email: string;
+}
+
 export interface IOrder {
   id: number;
   orderId: string;
   shopId: number;
   customerId: number;
+  customer: ICustomer;
   total: number;
   currency: string;
   createdAt: Date;

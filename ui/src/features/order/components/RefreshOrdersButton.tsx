@@ -1,12 +1,14 @@
+import { Button } from "antd";
+
+import { UndoOutlined } from "@ant-design/icons";
+
 function RefreshOrdersButton({
   onRefreshClick,
 }: {
   onRefreshClick: () => void;
 }): JSX.Element {
   return (
-    <button type="button" onClick={onRefreshClick}>
-      RefreshOrdersButton
-    </button>
+    <Button icon={<UndoOutlined />} size="large" onClick={onRefreshClick} />
   );
 }
 

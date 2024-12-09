@@ -2,12 +2,12 @@ import { useGetOrdersLazy } from "@Config/fetcher/orderApi";
 import { useEffect, useState } from "react";
 
 import OrdersTable from "@Features/order/components/OrdersTable";
-import RefreshOrdersButton from "@Features/order/components/RefreshOrdersButton";
 
 function Landing(): JSX.Element {
   const [shop, setShop] = useState<string>();
 
-  const [fetchOrders, { data, isLoading, isError, error }] = useGetOrdersLazy();
+  const [fetchOrders, { currentData, isFetching, isError, error }] =
+    useGetOrdersLazy();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -25,13 +25,14 @@ function Landing(): JSX.Element {
     fetchOrders({ shop, refresh: true });
   };
 
-  console.log(data, isLoading, isError, error);
-
   return (
     <div>
-      <h1>LANDING</h1>
-      <OrdersTable orders={data} loading={isLoading} />
-      <RefreshOrdersButton onRefreshClick={handleRefreshClick} />
+      <OrdersTable
+        orders={currentData}
+        loading={isFetching}
+        onRefreshClick={handleRefreshClick}
+      />
+      {isError && <div>{JSON.stringify(error)}</div>}
     </div>
   );
 }

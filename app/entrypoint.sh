@@ -28,5 +28,3 @@ echo "Tunnel URL: ${TUNNEL_URL}"
 
 npm install -g @shopify/cli &&
     npm run start:debug
-
-# SHOPIFY_CLI_PARTNERS_TOKEN=atkn_36e129a719fc8d923ad946eaf204f5848a45d0f3f04a46207fdb826860c9d1ff npx shopify app dev --tunnel-url=https://f380-176-40-225-174.ngrok-free.app:3001

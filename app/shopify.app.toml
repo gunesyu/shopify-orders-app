@@ -1,0 +1,26 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "87c567ce866a7652abad360dce52edcd"
+application_url = "https://f380-176-40-225-174.ngrok-free.app/shopify/install"
+embedded = false
+name = "insider-case"
+handle = "insider-case"
+
+[build]
+dev_store_url = "yunus-dev-test-store.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+scopes = "read_assigned_fulfillment_orders,write_assigned_fulfillment_orders,read_merchant_managed_fulfillment_orders,write_merchant_managed_fulfillment_orders,read_third_party_fulfillment_orders,write_third_party_fulfillment_orders,read_customers,read_delivery_customizations,write_delivery_customizations,read_discounts,write_discounts,read_draft_orders,write_draft_orders,read_fulfillments,write_fulfillments,read_orders,write_orders"
+
+[access.admin]
+direct_api_mode = "online"
+
+[webhooks]
+api_version = "2024-10"
+
+[auth]
+redirect_urls = [ "https://f380-176-40-225-174.ngrok-free.app/shopify/redirect" ]
+
+[pos]
+embedded = false

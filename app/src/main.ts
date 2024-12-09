@@ -1,7 +1,9 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaExceptionFilter } from './common/prisma/prisma.filter';
-import { ConfigService } from './common/config/config.service';
+import { LoggingMiddleware } from './shared/middleware/logging.middleware';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,8 +13,16 @@ async function bootstrap() {
 
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaExceptionFilter(httpAdapter));
+  app.use(new LoggingMiddleware().use);
 
-  await app.listen(app.get(ConfigService).getAppPort());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }),
+  );
+
+  await app.listen(app.get(ConfigService).get<number>('APP_PORT'));
 
   process.on('SIGINT', async () => {
     await app.close();
